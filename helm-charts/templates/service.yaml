@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "helm-charts.name" . }}
+  namespace: {{ template "helm-charts.namespace" . }}
+  labels:
+    {{- include "helm-charts.labels" . | nindent 4 }}
+    {{- if .Values.additionalLabels }}
+    {{ toYaml .Values.additionalLabels | nindent 4 }}
+    {{- end }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      {{- if eq "NodePort" .Values.service.type }}
+      nodePort: {{ .Values.service.nodePort }}
+      {{- end }}
+      protocol: TCP
+      name: http
+    - port: {{ .Values.service.debugPort }}
+      targetPort: http
+      {{- if eq "NodePort" .Values.service.type }}
+      nodePort: {{ .Values.service.debugNodePort }}
+      {{- end }}
+      protocol: TCP
+      name: debug
+  selector:
+    {{- include "helm-charts.selectorLabels" . | nindent 4 }}
+    {{- if .Values.podLabels }}
+    {{ toYaml .Values.podLabels | nindent 4 }}
+    {{- end }}

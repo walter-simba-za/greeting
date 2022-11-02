@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: greeting-service
+
+server:
+  port: 8443
+  servlet:
+    context-path: /greetings
+  ssl:
+    enabled: true
+    key-alias: greetings
+    key-store-password: changeit
+    key-store: classpath:server.jks
+    key-store-provider: SUN
+    key-store-type: JKS
+
+logging:
+  level:
+    co.za.zwibvafhi.greeting: DEBUG
+
+greeting:
+  template: Hello, %s!
+
+

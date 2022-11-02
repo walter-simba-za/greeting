@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: greeting-service
+
+server:
+  port: 8080
+  servlet:
+    context-path: /greetings
+
+logging:
+  level:
+    co.za.zwibvafhi.greeting: DEBUG
+
+greeting:
+  template: Hello, %s!
